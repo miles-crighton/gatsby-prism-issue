@@ -2,43 +2,88 @@
 path: ""
 ---
 
-<!-- ```js
-function test() {
+**Input (directives capitalised):**
+
+```js
+function highlightTest() {
+  // Highlight-start
+  return "this is a highlight test"
+  // Highlight-end
+}
+```
+
+**Output:**
+
+```js
+function highlightTest() {
   // highlight-start
-  return "this is a test"
+  return "this is a highlight test"
   // highlight-end
 }
-``` -->
+```
 
-<!-- ```js
-function test2() {
+**Input (directives capitalised):**
+
+```js
+function hideTest() {
+  // Hide-start
+  return "this is also a test"
+  // Hide-end
+}
+```
+
+```js
+function hideTest() {
   // hide-start
   return "this is also a test"
   // hide-end
 }
-``` -->
+```
+
+**Input (directives capitalised):**
 
 ```js
-function test2() {
-  //hide-range{3-5, 1}
+function fullTest() {
+  //Hide-range{2-3}
+  if (directiveRange) {
+    const strippedDirectiveRange = directiveRange.slice(1, -1)
+    const range = rangeParser.parse(strippedDirectiveRange)
+    if (range.length > 0) {
+      range.forEach(relativeIndex => {
+        //Highlight-start
+        if (feature === `hide`) {
+          actions.removeLines(1)
+        }
+        //Highlight-end
+        actions.flag(feature, index + relativeIndex, flagSource)
+      })
+      //Hide-next-line
+      break
+    }
+  }
+}
+```
 
-  let a = 2
+**Output:**
 
-  a += 52
-
-  let b = 6
-  let a = 2
-  a += 52
-  let b = 6
-  // highlight-start
-  let a = 2
-  // highlight-end
-  a += 52
-  // highlight-start
-  let b = 6
-  // highlight-end
-  // highlight-start
-  return "this is also a test"
-  // highlight-end
+```js
+function fullTest() {
+  //hide-range{2-3}
+  if (directiveRange) {
+    const strippedDirectiveRange = directiveRange.slice(1, -1)
+    const range = rangeParser.parse(strippedDirectiveRange)
+    if (range.length > 0) {
+      range.forEach(relativeIndex => {
+        //highlight-start
+        if (feature === `hide`) {
+          actions.removeLines(1)
+        }
+        //highlight-end
+        actions.flag(feature, index + relativeIndex, flagSource)
+      })
+      //hide-next-line
+      break
+    }
+  }
 }
 ```
